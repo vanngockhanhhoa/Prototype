@@ -4,9 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.ash.dto.request.LoginRequest;
 import org.example.ash.dto.request.RegisterRequest;
 import org.example.ash.dto.response.BaseResponse;
-import org.example.ash.entity.oracle.User;
 import org.example.ash.service.AuthService;
-import org.example.ash.service.UserDetailsServiceImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
-    private final UserDetailsServiceImpl userDetailsService;
 
     @PostMapping("/login")
     public ResponseEntity<BaseResponse<?>> login(@RequestBody LoginRequest request) {
@@ -32,10 +29,5 @@ public class AuthController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(BaseResponse.created(authService.register(request)));
-    }
-
-    @PostMapping("/user")
-    public ResponseEntity<BaseResponse<?>> createUser(@RequestBody User user) {
-        return ResponseEntity.ok(BaseResponse.ok(userDetailsService.createUser(user)));
     }
 }
